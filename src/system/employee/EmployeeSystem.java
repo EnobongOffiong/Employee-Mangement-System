@@ -16,12 +16,6 @@ public class EmployeeSystem {
 	        return false;
 	    }
 			
-//		for (Employee e : employees) {
-//	        if (e.getEmployeeId().equals(employee.getEmployeeId())) {
-//	            System.out.println("Employee with ID " + employee.getEmployeeId() + " already exists.");
-//	            return false;
-//	        }
-//		}
 		
 		if(!employeeIds.contains(employee.getEmployeeId())){
 			employees.add(employee);
@@ -39,22 +33,35 @@ public class EmployeeSystem {
 		
 	}
 	
-	public boolean removeEmployee(Employee employee) {
-		if(employee == null  || employee.getEmployeeId() == null) {
-			System.out.println("Invalid employee");
-			return false;
-		}
-		
-		 if (!employees.contains(employee)) {
-		        System.out.println("Employee with ID " + employee.getEmployeeId() + " does not exist.");
-		        return false;
-		    }
-		
-		employeeIds.remove(employee.getEmployeeId());
-		employees.remove(employee);
-		
-		System.out.println("Employee with ID " + employee.getEmployeeId() + " removed successfully.");
-		return true;
+	public boolean removeEmployee(String employeeId) {
+	    if (employeeId == null || employeeId.isEmpty()) {
+	        System.out.println("Invalid employee ID");
+	        return false;
+	    }
+
+	    if (employees.isEmpty()) {
+	        System.out.println("There are no employees to remove");
+	        return false;
+	    }
+
+	 
+	    Employee toRemove = null;
+	    for (Employee emp : employees) {
+	        if (emp.getEmployeeId().equals(employeeId)) {
+	            toRemove = emp;
+	            break;
+	        }
+	    }
+
+	    if (toRemove == null) {
+	        System.out.println("Employee with ID " + employeeId + " not found");
+	        return false;
+	    }
+
+	    employees.remove(toRemove);
+	    employeeIds.remove(employeeId);
+	    System.out.println("Employee with ID " + employeeId + " removed successfully");
+	    return true;
 	}
 	
 	public boolean searchEmployee(String employeeId) {
@@ -98,6 +105,7 @@ public class EmployeeSystem {
 		}
 		
 		System.out.println("All employees:");
+		System.out.println("   Fname Lname ID Age Dept. HireDate Salary ");
 		for(int i = 0; i < employees.size(); i++) {
 			System.out.println(i+1 + ". " + employees.get(i));
 			}
